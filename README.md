@@ -28,6 +28,9 @@ Sistema-Gerenciamento-Tarefas/
 - Aprendi manipulação de dados em JSON usando JAVA 
 - Aprendi a usar biblioteca externa lib sem usar Maven ou Grandle
 - Revisei conceito de CRUD
+
+### Como executar o código ?
+
   
 ## Autor do Projeto
 - Vinícius Cardoso Arimatéia 
