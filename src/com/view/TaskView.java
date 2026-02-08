@@ -46,10 +46,21 @@ public class TaskView {
     }
 
     public void atualizarTarefa() {
+        System.out.println("--- ATUALIZAR TAREFA ---");
+        System.out.println("Informe o Id: ");
+        int id = Integer.parseInt(scan.nextLine());
+
+        System.out.print("Novo Status (Pendente/Concluido): ");
+        boolean status = scan.nextBoolean();
+
+        TaskModel t = new TaskModel(null, null, id, status);
 
     }
 
-    public void excluirTarefa() {
-
+    public int excluirTarefa() {
+        System.out.println("--- EXCLUIR TAREFA ---");
+        System.out.print("Informe o ID para excluir: ");
+        int id = Integer.parseInt(scan.nextLine());
+        return id;
     }
 }
