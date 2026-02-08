@@ -1,10 +1,10 @@
 package com.model;
 
 public class TaskModel {
-    String titulo;
-    String descricao;
-    int id;
-    boolean status;
+    private String titulo;
+    private String descricao;
+    private int id;
+    private boolean status;
 
     public TaskModel(String titulo, String descricao, int id, boolean status) {
         this.titulo = titulo;
