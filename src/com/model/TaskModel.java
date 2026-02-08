@@ -27,4 +27,20 @@ public class TaskModel {
     public boolean getStatus() {
         return status; // FEITO OU NÃO FEITO
     }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
