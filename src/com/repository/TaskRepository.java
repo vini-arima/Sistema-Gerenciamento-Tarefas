@@ -22,12 +22,38 @@ public class TaskRepository {
 
     // READ : ler todo o arquivo
     public JSONArray readAll() {
-        // String conteudo = new String(Files.readAllBytes(Paths.get(FILE_PATH))) ; -
-        // depois
-        return new JSONArray(conteudo);
+        try {
+            String conteudo = new String(Files.readAllBytes(Paths.get(FILE_PATH)));
+            return new JSONArray(conteudo);
+
+        } catch (IOException e) {
+            return new JSONArray();
+        }
     }
 
     // UPDATE: Altera um registro pelo ID
+    public void update(int id, String novotitulo) throws IOException {
+        JSONArray lista = readAll();
+        for (int i = 0; i < lista.length(); i++) {
+            if (lista.getJSONObject(i).getInt("id") == id) {
+                lista.getJSONObject(i).put("nome", novotitulo);
+            }
+        }
+        save(lista);
+    }
 
     // DELETE: Remove um registro pelo ID
+    public void delete(int id) throws IOException {
+        JSONArray lista = readAll();
+        for (int i = 0; i < lista.length(); i++) {
+            if (lista.getJSONObject(i).getInt("id") == id) {
+                lista.remove(i);
+            }
+        }
+        save(lista);
+    }
+
+    private void save(JSONArray lista) throws IOException {
+        Files.write(Paths.get(FILE_PATH), lista.toString(2).getBytes());
+    }
 }
