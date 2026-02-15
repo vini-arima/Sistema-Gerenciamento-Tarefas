@@ -8,7 +8,7 @@ public class TaskView {
 
     private Scanner scan = new Scanner(System.in);
 
-    public void adicionarTarefa() {
+    public TaskModel adicionarTarefa() {
         System.out.println("--- NOVA TAREFA ---");
 
         System.out.print("ID: ");
@@ -20,9 +20,9 @@ public class TaskView {
         System.out.print("Descrição: ");
         String descricao = scan.nextLine();
 
-        String status = "Pendente";
+        boolean status = false;
 
-        // return new TaskModel(id, titulo, descricao, status);
+        return new TaskModel(id, titulo, descricao, status);
     }
 
     public void listarTarefa(List<TaskModel> tarefas) {
@@ -45,7 +45,7 @@ public class TaskView {
 
     }
 
-    public void atualizarTarefa() {
+    public TaskModel atualizarTarefa() {
         System.out.println("--- ATUALIZAR TAREFA ---");
         System.out.println("Informe o Id: ");
         int id = Integer.parseInt(scan.nextLine());
@@ -53,7 +53,7 @@ public class TaskView {
         System.out.print("Novo Status (Pendente/Concluido): ");
         boolean status = scan.nextBoolean();
 
-        TaskModel t = new TaskModel(null, null, id, status);
+        return new TaskModel(id, null, null, status);
 
     }
 

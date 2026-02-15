@@ -6,10 +6,11 @@ public class TaskModel {
     private int id;
     private boolean status;
 
-    public TaskModel(String titulo, String descricao, int id, boolean status) {
+    public TaskModel(int id, String titulo, String descricao, boolean status) {
         this.titulo = titulo;
         this.id = id;
         this.descricao = descricao;
+        this.status = status;
     }
 
     public String getTitulo() {
