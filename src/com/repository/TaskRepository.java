@@ -15,10 +15,11 @@ public class TaskRepository {
     // CREATE : Adiciona o novo objeto
     public void create(int id, String nome) throws IOException {
         List<TaskModel> listaDeTarefas = readAll();
-        JSONObject novo = new JSONObject();
-        novo.put("id", id);
-        novo.put("nome", nome);
-        listaDeTarefas.put(novo);
+
+        TaskModel novaTarefa = new TaskModel(id, nome, null, false);
+
+        listaDeTarefas.add(novaTarefa);
+
         save(listaDeTarefas);
     }
 
@@ -46,10 +47,13 @@ public class TaskRepository {
 
     // UPDATE: Altera um registro pelo ID
     public void update(int id, String novotitulo) throws IOException {
-        JSONArray lista = readAll();
-        for (int i = 0; i < lista.length(); i++) {
-            if (lista.getJSONObject(i).getInt("id") == id) {
-                lista.getJSONObject(i).put("nome", novotitulo);
+        List<TaskModel> lista = readAll();
+        for (int i = 0; i < lista.size(); i++) {
+            TaskModel tarefa = lista.get(i);
+
+            if (tarefa.getId() == id) {
+                tarefa.setTitulo(novotitulo);
+                break;
             }
         }
         save(lista);
@@ -58,15 +62,16 @@ public class TaskRepository {
     // DELETE: Remove um registro pelo ID
     public void delete(int id) {
         try {
-            JSONArray lista = readAll();
-            for (int i = 0; i < lista.length(); i++) {
-                if (lista.getJSONObject(i).getInt("id") == id) {
+            List<TaskModel> lista = readAll();
+            int i;
+            for (i = lista.size() - 1; i >= 0; i--) {
+                if (lista.get(i).getId() == id) {
                     lista.remove(i);
                 }
             }
             save(lista);
-        } catch (IOException e) {
-            System.out.println("Erro ao deletar: ");
+        } catch (Exception e) {
+            System.out.println("Erro ao deletar: " + e.getMessage());
         }
 
     }
