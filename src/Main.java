@@ -4,11 +4,8 @@ import com.repository.TaskRepository;
 import java.util.List;
 import java.util.Scanner;
 
-import org.json.JSONArray;
-
 public class Main {
     public static void main(String[] args) throws Exception {
-
         TaskView view = new TaskView();
         TaskRepository repository = new TaskRepository();
         Scanner teclado = new Scanner(System.in);
@@ -28,15 +25,22 @@ public class Main {
                 case 1:
                     TaskModel novaTarefa = view.adicionarTarefa();
                     repository.create(novaTarefa);
+                    System.out.println("Sucesso: Tarefa criada!");
                     break;
 
                 case 2:
                     List<TaskModel> lista = repository.readAll();
-                    view.listarTarefa(lista);
+                    if (lista.isEmpty()) {
+                        System.out.println("Aviso: Nenhuma tarefa encontrada.");
+                    } else {
+                        view.listarTarefa(lista);
+                    }
                     break;
+
                 case 3:
                     TaskModel tarefaAtualizada = view.atualizarTarefa();
                     repository.update(tarefaAtualizada);
+                    System.out.println("Sucesso: Tarefa atualizada!");
                     break;
                 case 4:
                     int idParaExcluir = view.excluirTarefa();
@@ -51,6 +55,8 @@ public class Main {
                     System.out.println("Opção inválida!");
                     break;
             }
+
+            teclado.close();
         }
     }
 }

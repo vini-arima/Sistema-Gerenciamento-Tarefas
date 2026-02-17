@@ -13,10 +13,8 @@ public class TaskRepository {
     private static final String FILE_PATH = "dados.json";
 
     // CREATE : Adiciona o novo objeto
-    public void create(int id, String nome) throws IOException {
+    public void create(TaskModel novaTarefa) throws IOException {
         List<TaskModel> listaDeTarefas = readAll();
-
-        TaskModel novaTarefa = new TaskModel(id, nome, null, false);
 
         listaDeTarefas.add(novaTarefa);
 
@@ -27,32 +25,37 @@ public class TaskRepository {
     public List<TaskModel> readAll() {
         List<TaskModel> listaDeTarefas = new ArrayList<>();
         try {
+            // Verifica se arquivo existe antes de ler
+            if (!Files.exists(Paths.get(FILE_PATH))) {
+                return listaDeTarefas;
+            }
+
             String conteudo = new String(Files.readAllBytes(Paths.get(FILE_PATH)));
+            if (conteudo.isEmpty())
+                return listaDeTarefas;
+
             JSONArray jsonArray = new JSONArray(conteudo);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-
                 TaskModel tarefa = new TaskModel(
                         obj.getInt("id"),
                         obj.getString("titulo"),
                         obj.getString("descricao"),
                         obj.getBoolean("status"));
+                listaDeTarefas.add(tarefa);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao ler arquivo: ");
+            System.out.println("Erro ao ler arquivo: " + e.getMessage());
         }
         return listaDeTarefas;
-
     }
 
     // UPDATE: Altera um registro pelo ID
-    public void update(int id, String novotitulo) throws IOException {
+    public void update(TaskModel novaTarefa) throws IOException {
         List<TaskModel> lista = readAll();
         for (int i = 0; i < lista.size(); i++) {
-            TaskModel tarefa = lista.get(i);
-
-            if (tarefa.getId() == id) {
-                tarefa.setTitulo(novotitulo);
+            if (lista.get(i).getId() == novaTarefa.getId()) {
+                lista.set(i, novaTarefa);
                 break;
             }
         }
@@ -76,23 +79,18 @@ public class TaskRepository {
 
     }
 
-    private void save(JSONArray lista) throws IOException {
-        Files.write(Paths.get(FILE_PATH), lista.toString(2).getBytes());
-    }
+    private void save(List<TaskModel> lista) throws IOException {
+        JSONArray jsonArray = new JSONArray();
+        for (TaskModel tarefa : lista) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", tarefa.getId());
+            jsonObject.put("titulo", tarefa.getTitulo()); // Assumindo getters na TaskModel
+            jsonObject.put("descricao", tarefa.getDescricao());
+            jsonObject.put("status", tarefa.getStatus());
 
-    // GAMBIARRA
-    public void create(TaskModel novaTarefa) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
-    }
+            jsonArray.put(jsonObject);
+        }
 
-    public void update(TaskModel tarefaAtualizada) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    private void save(List<TaskModel> listaDeTarefas) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        Files.write(Paths.get(FILE_PATH), jsonArray.toString(2).getBytes());
     }
 }
