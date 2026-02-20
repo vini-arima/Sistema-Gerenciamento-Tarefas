@@ -38,10 +38,11 @@ public class TaskRepository {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 TaskModel tarefa = new TaskModel(
-                        obj.getInt("id"),
-                        obj.getString("titulo"),
-                        obj.getString("descricao"),
-                        obj.getBoolean("status"));
+                        obj.optInt("id"), // mudei get
+                        obj.optString("titulo"),
+                        obj.optString("descricao"),
+                        obj.optBoolean("status", false));
+
                 listaDeTarefas.add(tarefa);
             }
         } catch (IOException e) {
@@ -51,13 +52,28 @@ public class TaskRepository {
     }
 
     // UPDATE: Altera um registro pelo ID
-    public void update(TaskModel novaTarefa) throws IOException {
+    public void update(int id, boolean novoStatus) throws IOException {
         List<TaskModel> lista = readAll();
+        boolean encontrado = false;
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getId() == novaTarefa.getId()) {
-                lista.set(i, novaTarefa);
+
+            TaskModel novaTarefa = lista.get(i);
+            if (novaTarefa.getId() == id) {
+
+                novaTarefa.setStatus(novoStatus);
+
+                encontrado = true;
                 break;
             }
+        }
+        if (encontrado) {
+            try {
+                save(lista);
+            } catch (Exception e) {
+                System.out.println("Erro ao Slavar arquivo" + e.getMessage());
+            }
+        } else {
+            System.out.println("Erro: ID " + id + " não encontrado.");
         }
         save(lista);
     }
