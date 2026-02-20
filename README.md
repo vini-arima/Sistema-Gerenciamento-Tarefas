@@ -20,7 +20,10 @@ Sistema-Gerenciamento-Tarefas/
 │       │   └── TaskRepository.java
 │       ├── view/
 │       │   └── TaskView.java
+|       ├── utils/
+│       │   └── Color.java
 │       └── Main.java
+|       
 ├── LICENSE
 └── README.md
 ```
@@ -31,6 +34,5 @@ Sistema-Gerenciamento-Tarefas/
 
 ### Como executar o código ?
 
-  
 ## Autor do Projeto
 - Vinícius Cardoso Arimatéia 
