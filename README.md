@@ -19,10 +19,10 @@ Sistema-Gerenciamento-Tarefas/
 │       ├── repository/
 │       │   └── TaskRepository.java
 │       ├── view/
-│       │   └── TaskView.java
+│       │   └── TaskView.java 
 |       ├── utils/
-│       │   └── Color.java
-│       └── Main.java
+│       │   └── Color.java  ---> CORES NO TERMINAL
+│       └── Main.java ---> EXECUTE O CÓDIGO AQUI (RUN JAVA)
 |       
 ├── LICENSE
 └── README.md
@@ -33,6 +33,15 @@ Sistema-Gerenciamento-Tarefas/
 - Revisei conceito de CRUD
 
 ### Como executar o código ?
+No Vscode:
 
+Executar ou Depurar --> Run Java (No arquivo Main.java)
+
+### Possivel problema ao rodar o código
+Para executar o programa você precisar utilizar \
+a biblioteca externa *json-20231013.jar*. Caso 
+não tenha o programa dara erro.
+
+### 
 ## Autor do Projeto
 - Vinícius Cardoso Arimatéia 
