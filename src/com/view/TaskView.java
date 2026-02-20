@@ -49,8 +49,9 @@ public class TaskView {
         System.out.println("--- ATUALIZAR TAREFA ---");
         System.out.println("Informe o Id: ");
         int id = Integer.parseInt(scan.nextLine());
-        // Limpar Buffer
-        scan.nextLine();
+
+        System.out.println("Informe o Titulo: ");
+        String titulo = scan.nextLine();
 
         System.out.println("Tarefa concluída? (S/N):");
         String entrada = scan.nextLine().trim().toLowerCase();
@@ -58,7 +59,7 @@ public class TaskView {
         // Converte 's' ou 'sim' para true, qualquer outra coisa para false
         boolean status = entrada.equals("s") || entrada.equals("sim");
 
-        return new TaskModel(id, null, null, status);
+        return new TaskModel(id, titulo, null, status);
 
     }
 
